@@ -4,7 +4,7 @@ Open a terminal into the loaded container in VSCode using the dev containers ext
 ```
 colcon build --symlink-install
 source install/setup.bash
-ros2 run eeg_publisher mock_publisher
+ros2 launch eeg_publisher mock_publisher_launch.py
 ```
 
 On a different terminal, run

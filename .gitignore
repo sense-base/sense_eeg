@@ -1,5 +1,8 @@
 *.swp
 .DS_Store
+build/
+install/
+log/
 workspace/build/
 workspace/install/
 workspace/log/
