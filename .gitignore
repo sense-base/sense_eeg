@@ -1,0 +1,10 @@
+*.swp
+.DS_Store
+workspace/build/
+workspace/install/
+workspace/log/
+workspace/src/build/
+workspace/src/install/
+workspace/src/log/
+**/__pycache__/
+workspace/.vscode/
