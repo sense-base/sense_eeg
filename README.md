@@ -17,3 +17,20 @@ This repository contains documentation and code for EEG.
 git clone git@github.com:sense-base/sense_eeg.git
 ```
 * Refer to the [CONTRIBUTING](CONTRIBUTING.md) guideline for detailed instructions on contributing to this repo.
+
+## Run
+Open a terminal into the loaded container in VSCode using the dev containers extension, and run
+
+```
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch eeg_publisher mock_publisher_launch.py
+```
+
+On a different terminal, run
+
+```
+source install/setup.bashß
+ros2 topic list
+ros2 topic echo /eeg/raw
+```
