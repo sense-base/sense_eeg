@@ -7,7 +7,7 @@ from eeg_msgs.msg import EEGBlock
 
 
 class MockEEGPublisher(Node):
-    def __init__(self, ):
+    def __init__(self):
         super().__init__('mock_eeg_publisher')
         np.random.seed(0)
         self.queue_size = 10
