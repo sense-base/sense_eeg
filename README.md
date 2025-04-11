@@ -34,3 +34,8 @@ source install/setup.bashß
 ros2 topic list
 ros2 topic echo /eeg/raw
 ```
+
+### Run Pre-commit Hooks
+```bash
+pre-commit run --all-files
+```
