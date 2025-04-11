@@ -1,0 +1,32 @@
+# Run the CI for pre-commit
+name: LINTING
+
+on:
+  # Triggers the workflow on push or pull request events for the dev and main
+  # branches or by manually running from the Actions tab.
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: ["opened", "reopened", "synchronize", "ready_for_review"]
+  workflow_dispatch:
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: always.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linters:
+    runs-on: ubuntu-latest
+    # don't run CI on draft PRs
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - uses: pre-commit/action@v3.0.1
+        
