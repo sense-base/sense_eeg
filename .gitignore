@@ -11,3 +11,5 @@ workspace/src/install/
 workspace/src/log/
 **/__pycache__/
 workspace/.vscode/
+.vscode
+**rosbag2*
