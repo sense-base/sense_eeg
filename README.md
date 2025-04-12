@@ -15,7 +15,6 @@ git clone git@github.com:sense-base/sense_eeg.git
 
 * :nut_and_bolt: Run and debug. Open a terminal into the loaded container in VSCode using the dev containers extension, and run
 ```
-source /opt/ros/humble/setup.bash
 colcon build --symlink-install
 source install/setup.bash
 ros2 launch eeg_publisher mock_publisher_launch.py
