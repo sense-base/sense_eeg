@@ -10,4 +10,4 @@ ignore_missing_imports = true
 strict = true
 show_column_numbers = true
 pretty = true
-files = ["workspace/src"]
+files = ["src"]
