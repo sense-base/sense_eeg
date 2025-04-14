@@ -2,6 +2,7 @@
 name = "sense_EEG"
 dynamic = ["version"]
 dependencies = []
+requires-python = ">=3.11"
 
 [tool.mypy]
 python_version = "3.11"
