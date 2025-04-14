@@ -2,12 +2,12 @@
 name: LINTING
 
 on:
-  # Triggers the workflow on push or pull request events for the dev and main
-  # branches or by manually running from the Actions tab.
+  # Triggers the workflow on push or pull request events for the main branch
+  #  or by manually running from the Actions tab.
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    # branches: [main]
     types: ["opened", "reopened", "synchronize", "ready_for_review"]
   workflow_dispatch:
 
