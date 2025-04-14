@@ -3,7 +3,7 @@
   <name>eeg_publisher</name>
   <version>0.0.0</version>
   <description>Mock EEG Publisher</description>
-  <maintainer email="user@email.com">root</maintainer>
+  <maintainer email="a.al-hindawi@ucl.ac.uk">root</maintainer>
   <license>Apache-2.0</license>
 
   <!-- Build dependencies -->
