@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from rclpy.publisher import Publisher
@@ -6,6 +5,7 @@ from rclpy.timer import Timer
 import numpy as np
 from std_msgs.msg import Header
 from eeg_msgs.msg import EEGBlock
+from numpy.random import default_rng
 
 from typing import Optional
 
@@ -14,12 +14,13 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
     def __init__(self) -> None:
         super().__init__("mock_eeg_publisher")
         self.n_seed: int = 0
-        np.random.seed(self.n_seed)
 
         self.queue_size: int = 10
         self.num_channels: int = 8
         self.num_samples: int = 32
         self.sampling_rate: float = 256.0
+
+        self.rng = default_rng(self.n_seed)
 
         self.timer_period_in_secs: float = 1 / (self.sampling_rate / self.num_samples)
 
@@ -45,7 +46,7 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         msg.num_samples = self.num_samples
         msg.sampling_rate = self.sampling_rate
         msg.data = (
-            np.random.randn(msg.num_channels * msg.num_samples)
+            self.rng.standard_normal(msg.num_channels * msg.num_samples)
             .astype(np.float32)
             .tolist()
         )
