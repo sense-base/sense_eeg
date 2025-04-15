@@ -18,19 +18,11 @@ setup(
     ],
     install_requires=["setuptools"],
     zip_safe=True,
-<<<<<<< HEAD:src/eeg_publisher/setup.py
-    maintainer="root",
-    maintainer_email="nik.k.nikaznan@outlook.com",
+    maintainer="Ahmed Al-Hindawi",
+    maintainer_email="a.al-hindawi@ucl.ac.uk",
     description="TODO: Package description",
     license="TODO: License declaration",
     tests_require=["pytest"],
-=======
-    maintainer='Ahmed Al-Hindawi',
-    maintainer_email='a.al-hindawi@ucl.ac.uk',
-    description='TODO: Package description',
-    license='TODO: License declaration',
-    tests_require=['pytest'],
->>>>>>> d1ae316109d0db7b78d7666180a9a63329a0e774:setup.py
     entry_points={
         "console_scripts": [
             "mock_publisher = eeg_publisher.mock_publisher:main",

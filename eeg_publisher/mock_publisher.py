@@ -1,30 +1,43 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+from rclpy.publisher import Publisher
+from rclpy.timer import Timer
 import numpy as np
 from std_msgs.msg import Header
 from eeg_msgs.msg import EEGBlock
 
+from typing import Optional
 
-class MockEEGPublisher(Node):
-    def __init__(self):
+
+class MockEEGPublisher(Node):  # type: ignore[misc]
+    def __init__(self) -> None:
         super().__init__("mock_eeg_publisher")
-        self.n_seed = 0
+        self.n_seed: int = 0
         np.random.seed(self.n_seed)
-        self.queue_size = 10
-        self.num_channels = 8
-        self.num_samples = 32
-        self.sampling_rate = 256.0
-        self.timer_period_in_secs = 1 / (self.sampling_rate / self.num_samples)
-        self.publisher = self.create_publisher(EEGBlock, "/eeg/raw", self.queue_size)
-        self.timer = self.create_timer(self.timer_period_in_secs, self.publish_data)
+
+        self.queue_size: int = 10
+        self.num_channels: int = 8
+        self.num_samples: int = 32
+        self.sampling_rate: float = 256.0
+
+        self.timer_period_in_secs: float = 1 / (self.sampling_rate / self.num_samples)
+
+        self.publisher: Publisher = self.create_publisher(
+            EEGBlock, "/eeg/raw", self.queue_size
+        )
+
+        self.timer: Timer = self.create_timer(
+            self.timer_period_in_secs, self.publish_data
+        )
+
         self.get_logger().info(
             f"Mock EEG Publisher running at {self.sampling_rate} Hz "
             f"with {self.num_samples} samples and "
             f"timer period of {self.timer_period_in_secs} seconds"
         )
 
-    def publish_data(self):
+    def publish_data(self) -> None:
         msg = EEGBlock()
         msg.header = Header()
         msg.header.stamp = self.get_clock().now().to_msg()
@@ -40,13 +53,9 @@ class MockEEGPublisher(Node):
         self.get_logger().info(f"Published EEGBlock: {len(msg.data)} samples")
 
 
-def main(args=None):
+def main(args: Optional[list[str]] = None) -> None:
     rclpy.init(args=args)
     node = MockEEGPublisher()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
-
-
-if __name__ == "__main__":
-    main()
