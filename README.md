@@ -36,7 +36,7 @@ rqt_graph
 pyenv install 3.10.13  # Skip if already installed
 pyenv virtualenv 3.10.13 sense_EEG-env
 pyenv local sense_EEG-env
-pip install .
+pip install -e .[dev]
 ```
 
 ### Run Pre-commit Hooks
