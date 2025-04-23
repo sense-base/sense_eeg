@@ -35,7 +35,7 @@ rqt_graph
 
 Install Python (3.10 or higher recommended):
 ```bash
-pyenv install 3.10.17  # Or any >=3.10 version you prefer
+pyenv install 3.10.17 
 ```
 
 ```bash
