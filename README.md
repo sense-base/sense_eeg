@@ -32,9 +32,14 @@ rqt_graph
 ```
 
 ## Setup environment with pyenv
+
+Install Python (3.10 or higher recommended):
 ```bash
-pyenv install 3.10.13  # Skip if already installed
-pyenv virtualenv 3.10.13 sense_EEG-env
+pyenv install 3.10.17  # Or any >=3.10 version you prefer
+```
+
+```bash
+pyenv virtualenv 3.10.17 sense_EEG-env
 pyenv local sense_EEG-env
 pip install -e ".[dev]"
 ```

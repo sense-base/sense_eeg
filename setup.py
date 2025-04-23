@@ -20,8 +20,8 @@ setup(
     zip_safe=True,
     maintainer="Ahmed Al-Hindawi",
     maintainer_email="a.al-hindawi@ucl.ac.uk",
-    description="TODO: Package description",
-    license="TODO: License declaration",
+    description="EEG Publisher for ROS2",
+    license="Apache License 2.0",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
