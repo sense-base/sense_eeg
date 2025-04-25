@@ -27,4 +27,3 @@ Please delete options accordingly to the description.
 - [ ] I have addressed and marked as resolved all the review comments in my PR.
 - [ ] Make sure your branch is up-to-date with main branch. See step 4 in [`CONTRIBUTING`](https://github.com/sense-base/sense_eeg/blob/main/CONTRIBUTING.md#pull-request-pr-and-merge-to-main-branch).
 - [ ] Finally, I have selected `squash and merge`
-

@@ -30,3 +30,21 @@ ros2 bag info <bag_file_name> (e.g., `rosbag2_data_time`)
 ros2 bag play <bag_file_name>
 rqt_graph
 ```
+
+## Setup environment with pyenv
+
+Install Python (3.10 or higher recommended):
+```bash
+pyenv install 3.10.17 
+```
+
+```bash
+pyenv virtualenv 3.10.17 sense_EEG-env
+pyenv local sense_EEG-env
+pip install -e ".[dev]"
+```
+
+### Run Pre-commit Hooks
+```bash
+pre-commit run --all-files
+```
