@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.publisher import Publisher
 from rclpy.timer import Timer
+from rclpy.clock import Clock
 import numpy as np
 from std_msgs.msg import Header
 from eeg_msgs.msg import EEGBlock
@@ -46,12 +47,10 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         ).astype(np.float32)
 
         # Use the bridge to convert to EEGBlock
-        msg = self.bridge.to_msg(
+        msg = self.bridge.numpy_to_eegblock(
             eeg_array,
-            num_channels=self.num_channels,
-            num_samples=self.num_samples,
             sampling_rate=self.sampling_rate,
-            timestamp=self.get_clock().now().to_msg(),
+            timestamp=self.get_clock().now().to_msg()
         )
 
         # Publish the message
