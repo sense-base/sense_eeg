@@ -6,13 +6,10 @@ from eeg_bridge.bridge import EEGBridge
 
 class MockEEGSubscriber(Node):  # type: ignore[misc]
     def __init__(self) -> None:
-        super().__init__('mock_eeg_subscriber')
+        super().__init__("mock_eeg_subscriber")
 
         self.subscription = self.create_subscription(
-            EEGBlock,
-            '/eeg/raw',
-            self.listener_callback,
-            10
+            EEGBlock, "/eeg/raw", self.listener_callback, 10
         )
         self.bridge = EEGBridge()
         self.get_logger().info("Mock EEG Subscriber started, listening on /eeg/raw")
@@ -25,8 +22,8 @@ class MockEEGSubscriber(Node):  # type: ignore[misc]
             self.get_logger().error(f"Failed to parse EEGBlock: {e}")
 
 
-def main(args=None):
-    rclpy.init(args=args)
+def main() -> None:
+    rclpy.init()
     node = MockEEGSubscriber()
     rclpy.spin(node)
     node.destroy_node()

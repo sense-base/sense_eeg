@@ -26,7 +26,7 @@ setup(
     entry_points={
         "console_scripts": [
             "mock_publisher = eeg_publisher.mock_publisher:main",
-            'mock_subscriber = eeg_publisher.mock_subscriber:main',
+            "mock_subscriber = eeg_publisher.mock_subscriber:main",
         ],
     },
 )
