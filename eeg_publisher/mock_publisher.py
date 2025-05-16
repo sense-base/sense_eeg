@@ -4,6 +4,7 @@ from rclpy.publisher import Publisher
 from rclpy.timer import Timer
 import numpy as np
 from eeg_msgs.msg import EEGBlock
+from std_msgs.msg import Header
 from eeg_bridge.bridge import EEGBridge
 from numpy.random import default_rng
 
@@ -44,11 +45,16 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
             (self.num_channels, self.num_samples)
         ).astype(np.float32)
 
+        # Create a Header with the current ROS time
+        header = Header()
+        header.stamp = self.get_clock().now().to_msg()
+        header.frame_id = "eeg"
+
         # Use the bridge to convert to EEGBlock
         msg = self.bridge.numpy_to_eegblock(
             eeg_array,
             sampling_rate=self.sampling_rate,
-            timestamp=self.get_clock().now().to_msg(),
+            header=header,
         )
 
         # Publish the message
