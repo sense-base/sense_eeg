@@ -4,47 +4,48 @@
 </div>
 
 ## :eyeglasses: Overview
-This repository contains documentation and code for EEG packages. 
+
+`sense_eeg` is a ROS 2 (Humble) package that provides a publisher node for streaming EEG data as EEGBlock messages defined in `sense_msgs`. It is designed to interface with live EEG acquisition hardware or synthetic/mock data sources, and integrates smoothly with downstream ROS 2 components.
+
 ## :school_satchel: Getting started
 * :computer: [Setting up ROS2 with docker container](https://github.com/sense-base/base/tree/main/docs/docker)
 
-* :octocat: Clone repo under `sense-base` path and refer to the [CONTRIBUTING](CONTRIBUTING.md) guideline for detailed instructions on contributing to this repo.
-```
-git clone git@github.com:sense-base/sense_eeg.git
+* :octocat: Clone repo under `sense-base` path and refer to the [CONTRIBUTING](CONTRIBUTING.md) guideline for detailed instructions on contributing to this repo. Create the directory `workspace/src`. Clone `sense_eeg` package into the `workspace/src`:
+
+```bash
+mkdir sense-base && cd sense-base
+git clone git@github.com:sense-base/base.git
+cd base
+mkdir workspace/src
+# Clone this eeg_publisher repo
+git clone https://github.com/your-org/sense_eeg.git
+# Clone the eeg_msgs package
+git clone https://github.com/your-org/sense_msgs.git
+# Also clone bridge if you plan to convert between NumPy and EEGBlock
+git clone https://github.com/your-org/sense_bridge.git
 ```
 
 * :nut_and_bolt: Run and debug. Open a terminal into the loaded container in VSCode using the dev containers extension, and run
-```
+
+```bash
 colcon build --symlink-install
 source install/setup.bash
 ros2 launch eeg_publisher mock_publisher_launch.py
 ```
 
+* Useful Debugging Tools (Optional)
 On a different terminal, run
+
+```bash
+ros2 topic list              # Verify /eeg/raw is available
+ros2 topic echo /eeg/raw    # See the raw published message
+rqt_graph                   # Visualize node/topic connections
 ```
-source install/setup.bash
-ros2 topic list
-ros2 topic echo /eeg/raw
+
+* If you’d like to record and replay EEG traffic:
+
+```bash
 ros2 bag record /eeg/raw
-ros2 bag info <bag_file_name> (e.g., `rosbag2_data_time`)
-ros2 bag play <bag_file_name>
-rqt_graph
-```
-
-## Setup environment with pyenv
-
-Install Python (3.10 or higher recommended):
-```bash
-pyenv install 3.10.17 
-```
-
-```bash
-pyenv virtualenv 3.10.17 sense_EEG-env
-pyenv local sense_EEG-env
-pip install -e ".[dev]"
-```
-
-### Run Pre-commit Hooks
-```bash
-pre-commit run --all-files
+ros2 bag info <bag_file>
+ros2 bag play <bag_file>
 ```
