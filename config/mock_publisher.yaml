@@ -1,0 +1,5 @@
+/eeg_publisher1/mock_publisher:
+  ros__parameters:
+    num_channels: 8
+    num_samples: 32
+    sampling_rate: 256.0
