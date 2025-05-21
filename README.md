@@ -37,7 +37,7 @@ ros2 launch eeg_publisher mock_publisher_launch.py
 On a different terminal, run
 
 ```bash
-ros2 topic list              # Verify /eeg/raw is available
+ros2 topic list             # Verify /eeg/raw is available
 ros2 topic echo /eeg/raw    # See the raw published message
 rqt_graph                   # Visualize node/topic connections
 ```
