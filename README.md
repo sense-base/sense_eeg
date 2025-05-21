@@ -18,11 +18,11 @@ git clone git@github.com:sense-base/base.git
 cd base
 mkdir workspace/src
 # Clone this eeg_publisher repo
-git clone https://github.com/your-org/sense_eeg.git
+git clone git@github.com:sense-base/sense_eeg.git
 # Clone the eeg_msgs package
-git clone https://github.com/your-org/sense_msgs.git
+git clone git@github.com:sense-base/sense_msgs.git
 # Also clone bridge if you plan to convert between NumPy and EEGBlock
-git clone https://github.com/your-org/sense_bridge.git
+git clone git@github.com:sense-base/sense_bridge.git
 ```
 
 * :nut_and_bolt: Run and debug. Open a terminal into the loaded container in VSCode using the dev containers extension, and run
