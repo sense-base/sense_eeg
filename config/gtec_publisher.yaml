@@ -1,0 +1,31 @@
+/eeg_publisher1/mock_publisher:
+  ros__parameters:
+    # these are as written in the gtec header file
+    sample_rate: 256 		     		# unsigned short int 0 to 65535 per second?
+    number_of_scans: 32         		# int
+    enable_trigger_line: 1			# gt_bool = unsigned int ( set 1 = true based on eegdev)
+    slave_mode: 0               		# gt_bool = unsigned int ( set 0 = false based on eegdev)
+    enable_sc: 0                		# gt_bool = unsigned int ( set 0 = false based on eegdev)
+    common_ground: [ 0, 0, 0, 0 ] 	        # an array of gt_bool from gAPI.h GT_USBAMP_NUM_GROUND = 4
+    common_reference: [ 0, 0, 0, 0 ]            # an array of gt_bool from gAPI.h GT_USBAMP_NUM_REFERENCE = 4
+    mode: 0                                     # gt_usbamp_device_mode . enum (GT_MODE_NORMAL, GT_MODE_IMPEDANCE, GT_MODE_CALIBRATE, GT_MODE_COUNTER)
+    scan_dio: 1					# gt_bool. eegdev sets to true
+    version: 0.0				# float - don't know. Not set in eegdev
+    bandpass: [ int x 16  ]                     # array of ints. from gAPI.h GT_USBAMP_NUM_ANALOG_IN is 16
+    notch: [ int x 16 ]                         # array of ints. from gAPI.h GT_USBAMP_NUM_ANALOG_IN is 16
+    bipolar: [ -2, -2, -2, -2, -2, ... ]        # array of ints. from gAPI.h GT_USBAMP_NUM_ANALOG_IN is eegdev sets to GT_BIPOLAR_DERIVATION_NONE = -2
+    analog_in_channel: [ in x 16 ]              # array of uchar. from gAPI.h GT_USBAMP_NUM_ANALOG_IN is 16
+    num_analog_in: 16                           # gt_size = unsigned long int
+    ao_config: a pointer 			# pointer to a gt_usbamp_analog_out_config object (see below)
+    # these are from mock publisher    
+    num_channels: 8
+    num_samples: 32
+    sampling_rate: 256.0
+
+# typedef struct usbamp_analog_out_config
+#{
+#  gt_usbamp_analog_out_shape shape;
+#  short int offset;
+#  short int frequency;
+#  short int amplitude;
+#} gt_usbamp_analog_out_config;
