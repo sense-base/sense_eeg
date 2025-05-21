@@ -1,5 +1,5 @@
 <div style="text-align: center;" align="center">
-  <img src="docs/figs/.svg" alt="" width="600"/>
+  <img src="docs/figs/sense_eeg.svg" alt="" width="800"/>
   <h1> sense_eeg </h1>
 </div>
 
