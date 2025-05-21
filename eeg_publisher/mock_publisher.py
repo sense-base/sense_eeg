@@ -16,6 +16,10 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         super().__init__("mock_eeg_publisher")
         self.bridge = EEGBridge()
 
+        # logger parameters
+        self.throttle_duration: float = 1.0
+        self.once: bool = False
+
         self.n_seed: int = 0
         self.queue_size: int = 10
         self.num_channels: int = 8
@@ -60,7 +64,9 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         # Publish the message
         self.publisher.publish(msg)
         self.get_logger().info(
-            f"Published EEGBlock: {eeg_array.shape} → {len(msg.data)} values"
+            f"Published EEGBlock: {eeg_array.shape} → {len(msg.data)} values",
+            once=self.once,
+            throttle_duration_sec=self.throttle_duration,
         )
 
 

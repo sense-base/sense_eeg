@@ -8,6 +8,10 @@ class MockEEGSubscriber(Node):  # type: ignore[misc]
     def __init__(self) -> None:
         super().__init__("mock_eeg_subscriber")
 
+        # logger parameters
+        self.throttle_duration: float = 1.0
+        self.once: bool = False
+
         self.subscription = self.create_subscription(
             EEGBlock, "/eeg/raw", self.listener_callback, 10
         )
@@ -17,7 +21,11 @@ class MockEEGSubscriber(Node):  # type: ignore[misc]
     def listener_callback(self, msg: EEGBlock) -> None:
         try:
             eeg_array = self.bridge.eegblock_to_numpy(msg)
-            self.get_logger().info(f"Received EEGBlock: shape {eeg_array.shape}")
+            self.get_logger().info(
+                f"Received EEGBlock: shape {eeg_array.shape}",
+                once=self.once,
+                throttle_duration_sec=self.throttle_duration,
+            )
         except Exception as e:
             self.get_logger().error(f"Failed to parse EEGBlock: {e}")
 
