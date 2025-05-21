@@ -23,8 +23,8 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
 
         self.rng = default_rng(self.n_seed)
 
-        sample_rate = self.get_parameter('sampling_rate')
-        n_samples = self.get_parameter('num_samples')
+        sample_rate = self.get_parameter('sampling_rate').get_parameter_value().double_value
+        n_samples = self.get_parameter('num_samples').get_parameter_value().integer_value
 
         timer_period_in_secs: float = 1 / (sample_rate / n_samples)
 
@@ -46,7 +46,7 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
 
     def publish_data(self) -> None:
         n_channels = self.get_parameter('num_channels').get_parameter_value().integer_value
-        sample_rate = self.get_parameter('sampling_rate').get_parameter_value().float_value
+        sample_rate = self.get_parameter('sampling_rate').get_parameter_value().double_value
         n_samples = self.get_parameter('num_samples').get_parameter_value().integer_value
         msg = EEGBlock()
 
