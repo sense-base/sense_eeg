@@ -16,15 +16,31 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         super().__init__("mock_eeg_publisher")
         self.bridge = EEGBridge()
 
-        # logger parameters
-        self.throttle_duration: float = 1.0
-        self.once: bool = False
+        # Declare and retrieve parameters
+        # These parameters are the default value but can be set in a YAML file and will override the default values
+        self.declare_parameter("sampling_rate", 256.0)
+        self.declare_parameter("num_channels", 8)
+        self.declare_parameter("num_samples", 32)
+        self.declare_parameter("queue_size", 10)
+        self.declare_parameter("n_seed", 0)
+        self.declare_parameter("throttle_duration", 1.0)
 
-        self.n_seed: int = 0
-        self.queue_size: int = 10
-        self.num_channels: int = 8
-        self.num_samples: int = 32
-        self.sampling_rate: float = 256.0
+        self.sampling_rate = (
+            self.get_parameter("sampling_rate").get_parameter_value().double_value
+        )
+        self.num_channels = (
+            self.get_parameter("num_channels").get_parameter_value().integer_value
+        )
+        self.num_samples = (
+            self.get_parameter("num_samples").get_parameter_value().integer_value
+        )
+        self.queue_size = (
+            self.get_parameter("queue_size").get_parameter_value().integer_value
+        )
+        self.n_seed = self.get_parameter("n_seed").get_parameter_value().integer_value
+        self.throttle_duration = (
+            self.get_parameter("throttle_duration").get_parameter_value().double_value
+        )
 
         self.rng = default_rng(self.n_seed)
 
