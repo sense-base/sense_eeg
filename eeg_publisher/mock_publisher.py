@@ -3,8 +3,9 @@ from rclpy.node import Node
 from rclpy.publisher import Publisher
 from rclpy.timer import Timer
 import numpy as np
-from std_msgs.msg import Header
 from eeg_msgs.msg import EEGBlock
+from std_msgs.msg import Header
+from eeg_bridge.bridge import EEGBridge
 from numpy.random import default_rng
 
 from typing import Optional
@@ -13,12 +14,33 @@ from typing import Optional
 class MockEEGPublisher(Node):  # type: ignore[misc]
     def __init__(self) -> None:
         super().__init__("mock_eeg_publisher")
-        self.n_seed: int = 0
+        self.bridge = EEGBridge()
 
-        self.queue_size: int = 10
-        self.num_channels: int = 8
-        self.num_samples: int = 32
-        self.sampling_rate: float = 256.0
+        # Declare and retrieve parameters
+        # These parameters are the default value but can be set in a YAML file and will override the default values
+        self.declare_parameter("sampling_rate", 256.0)
+        self.declare_parameter("num_channels", 8)
+        self.declare_parameter("num_samples", 32)
+        self.declare_parameter("queue_size", 10)
+        self.declare_parameter("n_seed", 0)
+        self.declare_parameter("throttle_duration", 1.0)
+
+        self.sampling_rate = (
+            self.get_parameter("sampling_rate").get_parameter_value().double_value
+        )
+        self.num_channels = (
+            self.get_parameter("num_channels").get_parameter_value().integer_value
+        )
+        self.num_samples = (
+            self.get_parameter("num_samples").get_parameter_value().integer_value
+        )
+        self.queue_size = (
+            self.get_parameter("queue_size").get_parameter_value().integer_value
+        )
+        self.n_seed = self.get_parameter("n_seed").get_parameter_value().integer_value
+        self.throttle_duration = (
+            self.get_parameter("throttle_duration").get_parameter_value().double_value
+        )
 
         self.rng = default_rng(self.n_seed)
 
@@ -39,19 +61,29 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         )
 
     def publish_data(self) -> None:
-        msg = EEGBlock()
-        msg.header = Header()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.num_channels = self.num_channels
-        msg.num_samples = self.num_samples
-        msg.sampling_rate = self.sampling_rate
-        msg.data = (
-            self.rng.standard_normal(msg.num_channels * msg.num_samples)
-            .astype(np.float32)
-            .tolist()
+        eeg_array = self.rng.standard_normal(
+            (self.num_channels, self.num_samples)
+        ).astype(np.float32)
+
+        # Create a Header with the current ROS time
+        header = Header()
+        header.stamp = self.get_clock().now().to_msg()
+        header.frame_id = "eeg"
+
+        # Use the bridge to convert to EEGBlock
+        msg = self.bridge.numpy_to_eegblock(
+            eeg_array,
+            sampling_rate=self.sampling_rate,
+            header=header,
         )
+
+        # Publish the message
         self.publisher.publish(msg)
-        self.get_logger().info(f"Published EEGBlock: {len(msg.data)} samples")
+        self.get_logger().info(
+            f"Published EEGBlock: {eeg_array.shape} → {len(msg.data)} values",
+            once=self.once,
+            throttle_duration_sec=self.throttle_duration,
+        )
 
 
 def main(args: Optional[list[str]] = None) -> None:
