@@ -81,7 +81,6 @@ class MockEEGPublisher(Node):  # type: ignore[misc]
         self.publisher.publish(msg)
         self.get_logger().info(
             f"Published EEGBlock: {eeg_array.shape} → {len(msg.data)} values",
-            once=self.once,
             throttle_duration_sec=self.throttle_duration,
         )
 

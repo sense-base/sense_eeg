@@ -18,6 +18,7 @@ def generate_launch_description() -> LaunchDescription:
                 namespace="eeg_publisher1",
                 executable="mock_subscriber",
                 name="mock_subscriber",
+                parameters=["config/mock_publisher.yaml"],
                 output="screen",
             ),
         ]

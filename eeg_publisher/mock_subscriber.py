@@ -8,9 +8,10 @@ class MockEEGSubscriber(Node):  # type: ignore[misc]
     def __init__(self) -> None:
         super().__init__("mock_eeg_subscriber")
 
-        # logger parameters
-        self.throttle_duration: float = 1.0
-        self.once: bool = False
+        self.declare_parameter("throttle_duration", 1.0)
+        self.throttle_duration = (
+            self.get_parameter("throttle_duration").get_parameter_value().double_value
+        )
 
         self.subscription = self.create_subscription(
             EEGBlock, "/eeg/raw", self.listener_callback, 10
@@ -23,7 +24,6 @@ class MockEEGSubscriber(Node):  # type: ignore[misc]
             eeg_array = self.bridge.eegblock_to_numpy(msg)
             self.get_logger().info(
                 f"Received EEGBlock: shape {eeg_array.shape}",
-                once=self.once,
                 throttle_duration_sec=self.throttle_duration,
             )
         except Exception as e:
