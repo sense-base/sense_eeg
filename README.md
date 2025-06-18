@@ -5,6 +5,7 @@
 
 ## :eyeglasses: Overview
 This repository contains documentation and code for EEG packages. 
+
 ## :school_satchel: Getting started
 * :computer: [Setting up ROS2 with docker container](https://github.com/sense-base/base/tree/main/docs/docker)
 
@@ -30,6 +31,10 @@ ros2 bag info <bag_file_name> (e.g., `rosbag2_data_time`)
 ros2 bag play <bag_file_name>
 rqt_graph
 ```
+
+## Setup of hardware 
+![fig](docs/hardware-connecton-gtech.svg)
+The diagram shows a general setup with the g.tec USBamp, a Linux computer, cables, and electrode connections.
 
 ## Setup environment with pyenv
 
